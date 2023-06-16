@@ -363,7 +363,7 @@ jobs:
             if curl -s ${URL} | grep "Welcome"
             then
               # Change this to 0 after the job fails
-              return 0
+              return 1
             else
               return 1
             fi
@@ -383,11 +383,11 @@ jobs:
             else
               return 1
             fi
-      - destroy_environment:
-          id: ${CIRCLE_WORKFLOW_ID:0:7}
-          when: on_fail
-      - revert_migrations:
-          id: ${CIRCLE_WORKFLOW_ID:0:7}
+      # - destroy_environment:
+      #     id: ${CIRCLE_WORKFLOW_ID:0:7}
+      #     when: on_fail
+      # - revert_migrations:
+      #     id: ${CIRCLE_WORKFLOW_ID:0:7}
 
   cloudfront-update:
     docker:
@@ -478,8 +478,8 @@ workflows:
           requires: [run-migrations]
       - deploy-backend:
           requires: [run-migrations]
-      # - smoke-test:
-      #     requires: [deploy-backend, deploy-frontend]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
       #     requires: [smoke-test]
       # - cleanup:
