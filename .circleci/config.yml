@@ -201,7 +201,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["9a:24:14:5a:7b:2c:de:a6:76:b3:b1:a9:8f:14:d7:d1"]
+          fingerprints: ["02:86:3e:a8:cb:d2:da:c9:04:4c:cd:c9:42:00:d5:4b"]
       - attach_workspace:
           at: ~/
       - run:
@@ -318,7 +318,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["9a:24:14:5a:7b:2c:de:a6:76:b3:b1:a9:8f:14:d7:d1"]
+          fingerprints: ["02:86:3e:a8:cb:d2:da:c9:04:4c:cd:c9:42:00:d5:4b"]
       - attach_workspace:
           at: ~/
       - run:
@@ -470,14 +470,14 @@ workflows:
           filters:
             branches:
               only: [master]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
-      # - deploy-backend:
-      #     requires: [run-migrations]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
       # - smoke-test:
       #     requires: [deploy-backend, deploy-frontend]
       # - cloudfront-update:
